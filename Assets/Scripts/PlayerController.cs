@@ -18,6 +18,8 @@ public class PlayerController : MonoBehaviour
 
     Rigidbody rb;
 
+    Vector2 movementDirection;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -27,16 +29,25 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float movementInput = Input.GetAxis("Horizontal");  
-        Vector3 movementDirection = new Vector3(movementInput, 0, 0);
+         
+        movementDirection = new Vector2(movementInput, 0);
+
+        //Face player towards input direction
+        if (movementDirection.x < 0 ) {
+            transform.eulerAngles = new Vector3(0, -90f, 0);
+        }
+        if (movementDirection.x > 0)
+        {
+            transform.eulerAngles = new Vector3(0, 90f, 0);
+        }
 
         //Jump
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded) {
-            rb.AddForce(transform.up * jumpForce);
+            rb.AddForce(transform.up * jumpForce * Time.deltaTime);
         }
 
         
-        rb.AddForce(movementDirection * movementSpeed, ForceMode.Acceleration);
+        
 
 
         //Shoot Projectile
@@ -52,9 +63,14 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate() 
     {
+        //Movement
+
+        rb.velocity = new Vector2(movementDirection * movementSpeed);
+
+
         //Ground Detection
         RaycastHit hit;
-        isGrounded = Physics.Raycast(transform.position, -transform.up, out hit, 1f);
+        isGrounded = Physics.Raycast(transform.position, -transform.up, out hit, 2f);
 
         //Apply Extra Gravity
         if (!isGrounded) {
