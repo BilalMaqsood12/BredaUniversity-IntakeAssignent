@@ -4,12 +4,22 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    [Header ("MOVEMENT")]
     public float movementSpeed = 6f;
-    public float jumpForce = 4f;
     public float gravity = -9.81f;
     public float groundDrag = 4f;
     public float airDrag = 0.1f;
     public bool isGrounded;
+    
+    [Header ("JUMP")]
+    public float jumpForce = 4f;
+    public float jumpTime = 0.4f;
+    public float jumpMultiplier = 3f;
+    bool isJumping;
+    float jumpCounter;
+    Vector3 vecGravity;
+    int numberOfJumps;
+
 
     [Header ("PROJECTILES AND STUFF")]
     public GameObject projectilePrefb;
@@ -18,11 +28,12 @@ public class PlayerController : MonoBehaviour
 
     Rigidbody rb;
 
-    Vector2 movementDirection;
+    Vector3 movementDirection;
 
     // Start is called before the first frame update
     void Start()
     {
+        vecGravity = new Vector3(0, -Physics.gravity.y, 0);
         rb = GetComponent<Rigidbody>();
     }
 
@@ -30,7 +41,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
          
-        movementDirection = new Vector2(movementInput, 0);
+        movementDirection = new Vector3(Input.GetAxis("Horizontal"), 0, 0);
 
         //Face player towards input direction
         if (movementDirection.x < 0 ) {
@@ -42,13 +53,39 @@ public class PlayerController : MonoBehaviour
         }
 
         //Jump
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded) {
-            rb.AddForce(transform.up * jumpForce * Time.deltaTime);
+        if (Input.GetButtonDown("Jump") && numberOfJumps < 1) {
+            rb.velocity = new Vector3(rb.velocity.x, jumpForce);
+            isJumping = true;
+            numberOfJumps += 1;
+            jumpCounter = 0;
         }
 
-        
-        
+        if (rb.velocity.y > 0 && isJumping) {
+            jumpCounter += Time.deltaTime;
+            if (jumpCounter > jumpTime) isJumping = false;
 
+            float t = jumpCounter / jumpTime;
+            float currentJumpM = jumpMultiplier;
+
+            if (t > 0.5f) {
+                currentJumpM = jumpCounter * (1 - t);
+            }
+            rb.velocity += vecGravity * currentJumpM * Time.deltaTime;
+        }
+
+        if (Input.GetButtonUp("Jump")) {
+            isJumping = false;
+            jumpCounter = 0;
+
+            if (rb.velocity.y > 0) {
+                rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y * 0.6f, rb.velocity.z);
+            }
+        }
+
+
+        if (isGrounded) {
+            numberOfJumps = 0;
+        }
 
         //Shoot Projectile
         if (Input.GetKeyDown(KeyCode.F))
@@ -64,8 +101,7 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate() 
     {
         //Movement
-
-        rb.velocity = new Vector2(movementDirection * movementSpeed);
+        rb.MovePosition(transform.position + movementDirection * movementSpeed * Time.deltaTime);
 
 
         //Ground Detection
@@ -83,7 +119,7 @@ public class PlayerController : MonoBehaviour
     private void ShootProjectile ()
     {
         var newProjectile = Instantiate(projectilePrefb, projectileSpawnTransform.position, Quaternion.identity);
-        newProjectile.GetComponent<Rigidbody>().AddForce(transform.right * throwForce);
+        newProjectile.GetComponent<Rigidbody>().AddForce(transform.forward * throwForce);
     }
 
 }
