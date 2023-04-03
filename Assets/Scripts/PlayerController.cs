@@ -101,7 +101,7 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate() 
     {
         //Movement
-        rb.MovePosition(transform.position + movementDirection * movementSpeed * Time.deltaTime);
+        rb.AddForce(movementDirection * movementSpeed * Time.deltaTime, ForceMode.Impulse);
 
 
         //Ground Detection
@@ -110,7 +110,7 @@ public class PlayerController : MonoBehaviour
 
         //Apply Extra Gravity
         if (!isGrounded) {
-            rb.AddForce(transform.up * gravity);
+            rb.AddForce(transform.up * gravity, ForceMode.Acceleration);
         }
 
         
