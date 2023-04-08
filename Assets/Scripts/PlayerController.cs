@@ -15,10 +15,16 @@ public class PlayerController : MonoBehaviour
     public float jumpForce = 4f;
     public float jumpTime = 0.4f;
     public float jumpMultiplier = 3f;
+    public float coyoteTime = 0.25f;
+    float _coyotiTime;
     bool isJumping;
     float jumpCounter;
     Vector3 vecGravity;
     int numberOfJumps;
+
+    [Header ("GROUND CHECK")]
+    public Transform groundChecker;
+    public float groundCheckDistance = 0.25f;
 
 
     [Header ("PROJECTILES AND STUFF")]
@@ -26,34 +32,56 @@ public class PlayerController : MonoBehaviour
     public Transform projectileSpawnTransform;
     public float throwForce = 1000f;
 
-    Rigidbody rb;
 
+    //
+    int facingDirection;
+
+    //Components
+    Rigidbody rb;
+    Animator animator;
     Vector3 movementDirection;
+
+
+    //Animation related stuff
+    int upperBodyLayerIndex;
 
     // Start is called before the first frame update
     void Start()
     {
         vecGravity = new Vector3(0, -Physics.gravity.y, 0);
         rb = GetComponent<Rigidbody>();
+        animator = GetComponent<Animator>();
+
+        _coyotiTime = coyoteTime;
+
+        //Animation related stuff
+        upperBodyLayerIndex = animator.GetLayerIndex("UpperBody");
     }
 
     // Update is called once per frame
     void Update()
     {
+        //Ground Detection
+        RaycastHit hit;
+        isGrounded = Physics.Raycast(groundChecker.position, -groundChecker.up, out hit, groundCheckDistance);
+        animator.SetBool("OnGround", isGrounded);
          
         movementDirection = new Vector3(Input.GetAxis("Horizontal"), 0, 0);
+        animator.SetFloat("Movement", movementDirection.x);
 
         //Face player towards input direction
         if (movementDirection.x < 0 ) {
-            transform.eulerAngles = new Vector3(0, -90f, 0);
+            transform.localScale = new Vector3(1, 1, -1);
+            facingDirection = 1;
         }
         if (movementDirection.x > 0)
         {
-            transform.eulerAngles = new Vector3(0, 90f, 0);
+            transform.localScale = new Vector3(1, 1, 1);
+            facingDirection = 0;
         }
 
         //Jump
-        if (Input.GetButtonDown("Jump") && numberOfJumps < 1) {
+        if (Input.GetButtonDown("Jump") && _coyotiTime != 0 && numberOfJumps < 1) {
             rb.velocity = new Vector3(rb.velocity.x, jumpForce);
             isJumping = true;
             numberOfJumps += 1;
@@ -82,15 +110,23 @@ public class PlayerController : MonoBehaviour
             }
         }
 
+        if (!isGrounded) {
+            animator.SetFloat("Jump", rb.velocity.y);
+            
+        }
+
 
         if (isGrounded) {
             numberOfJumps = 0;
+            _coyotiTime = coyoteTime;
         }
 
         //Shoot Projectile
         if (Input.GetKeyDown(KeyCode.F))
         {
-            ShootProjectile();
+            float upperBodyLayerWeight = 1f;
+            animator.SetLayerWeight(upperBodyLayerIndex, upperBodyLayerWeight);
+            animator.Play("Mr_Bunny_ThrowCarrots");
         }
 
         //Drag
@@ -103,14 +139,10 @@ public class PlayerController : MonoBehaviour
         //Movement
         rb.AddForce(movementDirection * movementSpeed * Time.deltaTime, ForceMode.Impulse);
 
-
-        //Ground Detection
-        RaycastHit hit;
-        isGrounded = Physics.Raycast(transform.position, -transform.up, out hit, 2f);
-
         //Apply Extra Gravity
         if (!isGrounded) {
             rb.AddForce(transform.up * gravity, ForceMode.Acceleration);
+            _coyotiTime -= Time.deltaTime;
         }
 
         
@@ -119,7 +151,18 @@ public class PlayerController : MonoBehaviour
     private void ShootProjectile ()
     {
         var newProjectile = Instantiate(projectilePrefb, projectileSpawnTransform.position, Quaternion.identity);
-        newProjectile.GetComponent<Rigidbody>().AddForce(transform.forward * throwForce);
+        
+        if (facingDirection == 0) {
+            newProjectile.GetComponent<Rigidbody>().AddForce(transform.forward * throwForce, ForceMode.Impulse);
+        }else if (facingDirection == 1) {
+            newProjectile.GetComponent<Rigidbody>().AddForce(-transform.forward * throwForce, ForceMode.Impulse);
+        }
+        
+    }
+
+    private void EndThrowAnimation ()
+    {
+        animator.SetLayerWeight(upperBodyLayerIndex, 0f);
     }
 
 }
