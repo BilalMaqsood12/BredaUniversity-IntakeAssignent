@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     public float groundDrag = 4f;
     public float airDrag = 0.1f;
     public bool isGrounded;
+    public LayerMask SqueezableObjects;
     
     [Header ("JUMP")]
     public float jumpForce = 4f;
@@ -122,7 +123,7 @@ public class PlayerController : MonoBehaviour
         }
 
         //Shoot Projectile
-        if (Input.GetKeyDown(KeyCode.F))
+        if (Input.GetKeyDown(KeyCode.F) && GameManager.instance.stonesCount > 0)
         {
             float upperBodyLayerWeight = 1f;
             animator.SetLayerWeight(upperBodyLayerIndex, upperBodyLayerWeight);
@@ -145,12 +146,22 @@ public class PlayerController : MonoBehaviour
             _coyotiTime -= Time.deltaTime;
         }
 
+
+        //Squeeze Over Objects
+        RaycastHit SqueezableObjectsHit;
+        if (Physics.Raycast(groundChecker.position, -groundChecker.up, out SqueezableObjectsHit, groundCheckDistance + 0.2f, SqueezableObjects))
+        {
+            AddForce(2000f, transform.up, ForceMode.Impulse);
+            Destroy(SqueezableObjectsHit.collider.gameObject);
+        }
+
         
     }
 
     private void ShootProjectile ()
     {
         var newProjectile = Instantiate(projectilePrefb, projectileSpawnTransform.position, Quaternion.identity);
+        GameManager.instance.stonesCount -= 1;
         
         if (facingDirection == 0) {
             newProjectile.GetComponent<Rigidbody>().AddForce(transform.forward * throwForce, ForceMode.Impulse);
@@ -163,6 +174,11 @@ public class PlayerController : MonoBehaviour
     private void EndThrowAnimation ()
     {
         animator.SetLayerWeight(upperBodyLayerIndex, 0f);
+    }
+
+    private void AddForce(float force, Vector3 direction, ForceMode forceMode)
+    {
+        rb.AddForce(direction * force * Time.deltaTime, ForceMode.Impulse);
     }
 
 }
