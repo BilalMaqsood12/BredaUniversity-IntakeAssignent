@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     public float airDrag = 0.1f;
     public bool isGrounded;
     public LayerMask SqueezableObjects;
+    public float SqueezeForce = 1200f;
     
     [Header ("JUMP")]
     public float jumpForce = 4f;
@@ -151,7 +152,12 @@ public class PlayerController : MonoBehaviour
         RaycastHit SqueezableObjectsHit;
         if (Physics.Raycast(groundChecker.position, -groundChecker.up, out SqueezableObjectsHit, groundCheckDistance + 0.2f, SqueezableObjects))
         {
-            AddForce(2000f, transform.up, ForceMode.Impulse);
+            AddForce(SqueezeForce, transform.up, ForceMode.Impulse);
+
+            //If it's a crate, open it.
+            if (SqueezableObjectsHit.collider.gameObject.GetComponent<Crate>() != null) {
+                SqueezableObjectsHit.collider.gameObject.GetComponent<Crate>().OpenCrate();
+            }
             Destroy(SqueezableObjectsHit.collider.gameObject);
         }
 

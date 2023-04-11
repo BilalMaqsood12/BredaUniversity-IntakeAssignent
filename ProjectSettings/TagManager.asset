@@ -5,15 +5,17 @@ TagManager:
   serializedVersion: 2
   tags:
   - Projectile
+  - Crate
+  - Item
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
   - Crate
-  - 
+  - Item
   - 
   - 
   - 
