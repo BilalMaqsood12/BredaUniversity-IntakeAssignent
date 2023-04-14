@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: -747878760110787421}
   - component: {fileID: 6407709143304460244}
   - component: {fileID: 4617643541954863992}
-  - component: {fileID: -6229607129209336688}
+  - component: {fileID: 2836559345244167688}
   m_Layer: 0
   m_Name: Stones x5
   m_TagString: Item
@@ -34,7 +34,7 @@ Transform:
   m_Children:
   - {fileID: 5024342302759279903}
   m_Father: {fileID: 0}
-  m_RootOrder: 19
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &-747878760110787421
 MonoBehaviour:
@@ -51,7 +51,6 @@ MonoBehaviour:
   item: 2
   hearts: 1
   stones: 5
-  triggerCollider: {fileID: -6229607129209336688}
 --- !u!212 &6407709143304460244
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -131,8 +130,8 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 120
   m_CollisionDetection: 0
---- !u!135 &-6229607129209336688
-SphereCollider:
+--- !u!65 &2836559345244167688
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -146,11 +145,11 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 2
+  m_Size: {x: 4, y: 4, z: 4}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8945743323440575655
 GameObject:

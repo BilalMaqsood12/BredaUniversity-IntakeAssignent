@@ -7,8 +7,6 @@ public class Item : MonoBehaviour
     public ITEM item;
     public int hearts = 1;
     public int stones = 5;
-    [Space]
-    public Collider triggerCollider;
 
     public enum ITEM
     {
@@ -17,30 +15,40 @@ public class Item : MonoBehaviour
         Stones,
     }
 
-    void OpenCrate ()
-    {
-        Invoke("DisableTriggerCollider", 0f);
-        Invoke ("EnableTriggerCollider", 3f);
 
+    float setTriggerTime = .3f;
+
+    private void Update() 
+    {
+        setTriggerTime -= Time.deltaTime;
+        if (setTriggerTime < 0) {
+            GetComponent<Collider>().isTrigger = true;
+        }    
+    }
+
+    void PickupItem ()
+    {
         if (item.Equals(ITEM.Invincibility)) {
             
         }
         if (item.Equals(ITEM.Hearts)) {
-            GameManager.instance.AddHeart(hearts);
+            if (GameManager.instance.currentHearts < GameManager.instance.maxHearts) {
+                GameManager.instance.AddHeart(hearts);
+                Destroy(this.gameObject);
+            }else {
+                return;
+            }
         }
         if (item.Equals(ITEM.Stones)) {
             GameManager.instance.AddStones(stones);
+            Destroy(this.gameObject);
         }
-
-        Destroy(this.gameObject);
+        
     }
 
     private void OnTriggerEnter(Collider other) {
         if (other.CompareTag("Player")) {
-            OpenCrate();
+            PickupItem();
         }
     }
-
-    private void DisableTriggerCollider () {triggerCollider.isTrigger = false;}
-    private void EnableTriggerCollider () {triggerCollider.isTrigger = true;}
 }

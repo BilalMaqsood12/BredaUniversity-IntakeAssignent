@@ -65,7 +65,7 @@ GameObject:
   - component: {fileID: -2382520115400036285}
   - component: {fileID: 8476384890380616194}
   - component: {fileID: 3961541266614668695}
-  - component: {fileID: 8946459131053175261}
+  - component: {fileID: -5761741438475873581}
   m_Layer: 0
   m_Name: Stones x10
   m_TagString: Item
@@ -104,7 +104,6 @@ MonoBehaviour:
   item: 2
   hearts: 1
   stones: 10
-  triggerCollider: {fileID: 8946459131053175261}
 --- !u!212 &8476384890380616194
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -184,8 +183,8 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 120
   m_CollisionDetection: 0
---- !u!135 &8946459131053175261
-SphereCollider:
+--- !u!65 &-5761741438475873581
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -199,9 +198,9 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 2
+  m_Size: {x: 4, y: 4, z: 4}
   m_Center: {x: 0, y: 0, z: 0}

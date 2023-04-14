@@ -21,6 +21,7 @@ public class Crate : MonoBehaviour
         Enemy
     }
     
+    GameObject newObject;
 
     // Start is called before the first frame update
     void Start()
@@ -39,18 +40,32 @@ public class Crate : MonoBehaviour
         }
 
         if (crateType.Equals(CrateType.Hearts)) {
-            var heart = Instantiate(HeartItem, transform.position, Quaternion.identity);
-            heart.GetComponent<Rigidbody>().AddForce(forceDirection * force * Time.deltaTime, ForceMode.Impulse);
+            SpawnObject(HeartItem, false, null);
         }
 
         if (crateType.Equals(CrateType.Stones)) {
-            int randStonesAmount = Random.Range(0, StonesItem.Length);
-            var stones = Instantiate(StonesItem[randStonesAmount], transform.position, Quaternion.identity);
-            stones.GetComponent<Rigidbody>().AddForce(forceDirection * force * Time.deltaTime, ForceMode.Impulse);
+            SpawnObject(null, true, StonesItem);
         }
 
         if (crateType.Equals(CrateType.Enemy)) {
             Debug.Log("Enemy");
         }
+
+        Destroy(this.gameObject);
+    }
+
+    private void SpawnObject (GameObject GO, bool fromArray, GameObject[] GOArray) {
+        if (!fromArray) 
+        {
+            newObject = Instantiate(GO, transform.position, Quaternion.identity);
+            newObject.GetComponent<Rigidbody>().AddForce(forceDirection * force * Time.deltaTime, ForceMode.Impulse);
+        } 
+        else if (fromArray) 
+        {
+            int ObjectToSpawnNumber = Random.Range(0, GOArray.Length);
+            newObject = Instantiate(GOArray[ObjectToSpawnNumber], transform.position, Quaternion.identity);
+            newObject.GetComponent<Rigidbody>().AddForce(forceDirection * force * Time.deltaTime, ForceMode.Impulse);
+           
+        }        
     }
 }
