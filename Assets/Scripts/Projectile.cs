@@ -17,12 +17,19 @@ public class Projectile : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider other) {
-        if (!other.CompareTag("Player")) {
-            Destroy(this.gameObject);
-        }
-
+    
         if (other.CompareTag("Crate")) {
             other.gameObject.GetComponent<Crate>().OpenCrate();
         }
+
+        if (other.CompareTag("Enemy")) {
+            other.GetComponent<Health>().TakeDamage(1);
+        }
+
+        if (other.CompareTag("Player")) {
+            GameManager.instance.RemoveHeart(1);
+        }
+
+        Destroy(this.gameObject);
     }
 }
