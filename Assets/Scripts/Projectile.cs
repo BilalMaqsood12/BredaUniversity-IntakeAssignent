@@ -23,6 +23,11 @@ public class Projectile : MonoBehaviour
         }
 
         if (other.CompareTag("Enemy")) {
+            if (GameManager.instance.player.position.x < transform.position.x) {
+                other.GetComponent<Enemy>().movingRight = false;
+            }else if (GameManager.instance.player.position.x > transform.position.x) {
+                other.GetComponent<Enemy>().movingRight = true;
+            }
             other.GetComponent<Health>().TakeDamage(1);
         }
 
@@ -30,6 +35,8 @@ public class Projectile : MonoBehaviour
             GameManager.instance.RemoveHeart(1);
         }
 
-        Destroy(this.gameObject);
+        if (!other.CompareTag("Item")) {
+            Destroy(this.gameObject);
+        }
     }
 }

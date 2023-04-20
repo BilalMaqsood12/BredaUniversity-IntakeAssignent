@@ -13,14 +13,19 @@ public class Enemy : MonoBehaviour
     public float stoppingDistance = 4f;
     public LayerMask playerMask;
     public float coolDownTime = 2f;
+    public float extraGravity = -80f;
     [Space]
     [ReadOnly]public bool movingRight = true;
     [ReadOnly]public bool hasSpottedPlayer;
     [Space]
     public Transform obstacleDetector;
     public float detectionDistance;
-    public bool detectGround;
-    public bool detectWall;
+   
+    [Space]
+
+    [ReadOnly]public bool detectGround;
+    [ReadOnly]public bool detectWall;
+    
 
     [Header ("PROJECTILES AND STUFF")]
     public GameObject projectilePrefb;
@@ -31,9 +36,12 @@ public class Enemy : MonoBehaviour
     bool facePlayerDirection;
 
     float _coolDownTime;
+    float _directionCoolDownTime = 0.25f;
 
     Rigidbody rb;
     Animator animator;
+
+    RaycastHit[] hit;
 
     // Start is called before the first frame update
     void Start()
@@ -42,6 +50,10 @@ public class Enemy : MonoBehaviour
         animator = GetComponent<Animator>();
 
         _coolDownTime = coolDownTime;
+
+        ChangeDirection();
+
+        hit = new RaycastHit[3];
     }
 
     // Update is called once per frame
@@ -66,35 +78,38 @@ public class Enemy : MonoBehaviour
 
         animator.SetFloat("Movement", rb.velocity.x);
 
+//      -----------------------------------------------------------------------------------------------
+
+
+        _directionCoolDownTime -= Time.deltaTime;
+
         //Ground Detection
-        RaycastHit groundInfo;
-        detectGround = Physics.Raycast(obstacleDetector.position, -obstacleDetector.up, out groundInfo, detectionDistance);
-        if (groundInfo.collider == null) 
+        Vector3[] directions = new Vector3[]{-Vector3.up, Vector3.left, Vector3.right};
+    
+        detectGround = Physics.Raycast(obstacleDetector.position, directions[0], out hit[0], detectionDistance);
+        if (hit[0].collider == null && _directionCoolDownTime <= 0f) 
         {
-            if (movingRight == true) {
-                transform.localScale = new Vector3(1, 1, -1);
-                movingRight = false;
-            }else if (movingRight == false) {
-                transform.localScale = new Vector3(1, 1, 1);
-                movingRight = true;
-            }
+            ChangeDirection();
         }
 
-        //Wall Detection
-        RaycastHit wallInfo;
-        detectWall = Physics.Raycast(obstacleDetector.position, dir, out wallInfo, detectionDistance);
-        if (wallInfo.collider != null) 
+        //Wall Detection in Left Direction
+        detectWall = Physics.Raycast(obstacleDetector.position, directions[1], out hit[1], detectionDistance);
+        if (hit[1].collider != null && _directionCoolDownTime <= 0f) 
         {
-            if (movingRight == true) {
-                transform.localScale = new Vector3(1, 1, -1);
-                movingRight = false;
-            }else if (movingRight == false) {
-                transform.localScale = new Vector3(1, 1, 1);
-                movingRight = true;
-            }
+            ChangeDirection();
+        }
+
+        //Wall Detection in Right Direction
+        detectWall = Physics.Raycast(obstacleDetector.position, directions[2], out hit[2], detectionDistance);
+        if (hit[2].collider != null && _directionCoolDownTime <= 0f) 
+        {
+            ChangeDirection();
         }
 
 
+//      -----------------------------------------------------------------------------------------------
+
+        
         //Spot Player
         hasSpottedPlayer = Physics.Raycast(playerDetectorTransform.position, dir, playerSpottableDistance, playerMask);
         if (Vector3.Distance(transform.position, GameManager.instance.player.position) < stoppingDistance && hasSpottedPlayer) {
@@ -116,7 +131,8 @@ public class Enemy : MonoBehaviour
                 transform.localScale = new Vector3(1, 1, -1);
             }
         }
-        else if (!hasSpottedPlayer) 
+        
+        if (!hasSpottedPlayer) 
         {
             _coolDownTime -= Time.deltaTime;
             if (_coolDownTime < 0) {
@@ -130,7 +146,6 @@ public class Enemy : MonoBehaviour
     private void ShootProjectile ()
     {
         var newProjectile = Instantiate(projectilePrefb, projectileSpawnTransform.position, Quaternion.identity);
-        GameManager.instance.stonesCount -= 1;
         
         if (movingRight) {
             newProjectile.GetComponent<Rigidbody>().AddForce(transform.forward * throwForce, ForceMode.Impulse);
@@ -138,5 +153,24 @@ public class Enemy : MonoBehaviour
             newProjectile.GetComponent<Rigidbody>().AddForce(-transform.forward * throwForce, ForceMode.Impulse);
         }
         
+    }
+
+    private void FixedUpdate() {
+        if (!detectGround) {
+            rb.AddForce(transform.up * extraGravity, ForceMode.Acceleration);
+        }
+    }
+
+    public void ChangeDirection ()
+    {
+        if (movingRight == true) {
+            transform.localScale = new Vector3(1, 1, -1);
+            movingRight = false;
+        }else if (movingRight == false) {
+            transform.localScale = new Vector3(1, 1, 1);
+            movingRight = true;
+        }
+
+        _directionCoolDownTime = 0.25f;
     }
 }
