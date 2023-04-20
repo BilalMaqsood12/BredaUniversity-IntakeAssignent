@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    public bool canMove = true;
     float speed;
     public float chasingSpeed;
     public float partolSpeed;
@@ -71,7 +72,7 @@ public class Enemy : MonoBehaviour
             speed = chasingSpeed;
         }
 
-        if (!startShooting) {
+        if (!startShooting && canMove) {
             if (movingRight) {rb.AddForce(Vector3.right * speed * Time.deltaTime);}
             else if (!movingRight) {rb.AddForce(Vector3.left * speed * Time.deltaTime);}
         }
