@@ -2128,11 +2128,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 199000de0caf2db409f963954eb16ca1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canMove: 1
   chasingSpeed: 650
   partolSpeed: 500
   playerDetectorTransform: {fileID: 635289856773205933}
   playerSpottableDistance: 12
-  stoppingDistance: 7
+  stoppingDistance: 9
   playerMask:
     serializedVersion: 2
     m_Bits: 8

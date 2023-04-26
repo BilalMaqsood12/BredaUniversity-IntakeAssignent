@@ -35,8 +35,16 @@ public class Projectile : MonoBehaviour
             GameManager.instance.RemoveHeart(1);
         }
 
+        if (other.gameObject.tag == "Cage Controller") {
+            other.transform.parent.GetComponent<Cage>().OpenGate();
+            Destroy(this.gameObject);
+        
+        }
+
         if (!other.CompareTag("Item")) {
             Destroy(this.gameObject);
         }
+        
     }
+
 }

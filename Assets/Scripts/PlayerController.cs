@@ -6,10 +6,12 @@ public class PlayerController : MonoBehaviour
 {
     [Header ("MOVEMENT")]
     public float movementSpeed = 6f;
+    public float flyingStrength = -30f;
     public float gravity = -9.81f;
     public float groundDrag = 4f;
     public float airDrag = 0.1f;
     public bool isGrounded;
+    public bool canFly;
     public LayerMask SqueezableObjects;
     public float SqueezeForce = 1200f;
     
@@ -37,6 +39,7 @@ public class PlayerController : MonoBehaviour
 
     //
     int facingDirection;
+    float _gravity;
 
     //Components
     Rigidbody rb;
@@ -133,6 +136,12 @@ public class PlayerController : MonoBehaviour
 
         //Drag
         rb.drag = isGrounded ? groundDrag : airDrag;
+        
+        if (isGrounded) {
+            _gravity = gravity;
+        }else if (!isGrounded && rb.velocity.y < -15 && canFly) {
+            _gravity = flyingStrength;
+        }
 
     }
 
@@ -143,7 +152,7 @@ public class PlayerController : MonoBehaviour
 
         //Apply Extra Gravity
         if (!isGrounded) {
-            rb.AddForce(transform.up * gravity, ForceMode.Acceleration);
+            rb.AddForce(transform.up * _gravity, ForceMode.Acceleration);
             _coyotiTime -= Time.deltaTime;
         }
 

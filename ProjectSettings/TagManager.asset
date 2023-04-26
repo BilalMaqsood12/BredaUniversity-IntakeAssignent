@@ -8,6 +8,8 @@ TagManager:
   - Crate
   - Item
   - Enemy
+  - Moving Platform
+  - Cage Controller
   layers:
   - Default
   - TransparentFX

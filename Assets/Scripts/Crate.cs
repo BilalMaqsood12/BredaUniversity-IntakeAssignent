@@ -35,10 +35,6 @@ public class Crate : MonoBehaviour
 
     public void OpenCrate ()
     {
-        if (crateType.Equals(CrateType.Empty)) {
-            return;
-        }
-
         if (crateType.Equals(CrateType.Invincibility)) {
             Debug.Log("Invincibility");
         }

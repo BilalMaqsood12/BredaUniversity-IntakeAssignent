@@ -2,13 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Cinemachine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance {get; set;}
 
     public Transform player;
-
+    public CinemachineVirtualCamera followCamera;
 
     [Header ("PLAYER STATS")]
     public int stonesCount;
@@ -41,6 +43,10 @@ public class GameManager : MonoBehaviour
             RemoveHeart(1);
         }
 
+        if (currentHearts <= 0) {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+
     }
 
     public void RemoveHeart (int val)
@@ -63,6 +69,12 @@ public class GameManager : MonoBehaviour
 
     public void AddStones (int val) {
         stonesCount += val;
+    }
+
+    public void RemoveCameraTargets ()
+    {
+        followCamera.m_Follow = null;
+        followCamera.m_LookAt = null;
     }
 
 }

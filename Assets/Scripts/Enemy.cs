@@ -52,7 +52,9 @@ public class Enemy : MonoBehaviour
 
         _coolDownTime = coolDownTime;
 
-        ChangeDirection();
+        if (canMove) {
+            ChangeDirection();
+        }
 
         hit = new RaycastHit[3];
     }
