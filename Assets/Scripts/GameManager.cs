@@ -77,4 +77,8 @@ public class GameManager : MonoBehaviour
         followCamera.m_LookAt = null;
     }
 
+    public void CancelMovement () {
+        player.gameObject.GetComponent<PlayerController>().enabled = false;
+    }
+
 }

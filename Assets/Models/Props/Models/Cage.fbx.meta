@@ -9,6 +9,11 @@ ModelImporter:
       assembly: UnityEngine.CoreModule
       name: Cage
     second: {fileID: 2100000, guid: a11eb6c240148d74694d5a83a581689f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Cage.001
+    second: {fileID: 2100000, guid: a11eb6c240148d74694d5a83a581689f, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

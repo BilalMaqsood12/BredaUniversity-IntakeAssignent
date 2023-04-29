@@ -23,6 +23,8 @@ public class Cage : MonoBehaviour
         Debug.Log("Open Gate");
         sparkles.Play();
         GetComponent<Animator>().Play("OpenGate");
+        GameManager.instance.CancelMovement();
+        StartCoroutine(FinalCutscene.instance.StartCutscene());
     }
 
 }
