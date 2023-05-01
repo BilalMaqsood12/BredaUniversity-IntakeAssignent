@@ -2598,11 +2598,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canMove: 1
-  chasingSpeed: 650
-  partolSpeed: 500
+  chasingSpeed: 700
+  partolSpeed: 575
   playerDetectorTransform: {fileID: 3640152693594843507}
   playerSpottableDistance: 12
-  stoppingDistance: 9
+  stoppingDistance: 10
   playerMask:
     serializedVersion: 2
     m_Bits: 8

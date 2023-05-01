@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class FinalCutscene : MonoBehaviour
 {
@@ -43,6 +44,6 @@ public class FinalCutscene : MonoBehaviour
 
         yield return new WaitForSecondsRealtime(3f);
 
-        Application.LoadLevel("Start");
+        SceneManager.LoadScene("Start");
     }
 }

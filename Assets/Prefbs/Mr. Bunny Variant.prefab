@@ -7338,7 +7338,7 @@ MonoBehaviour:
   groundDrag: 4
   airDrag: 4
   isGrounded: 1
-  isFlying: 0
+  canFly: 0
   SqueezableObjects:
     serializedVersion: 2
     m_Bits: 64

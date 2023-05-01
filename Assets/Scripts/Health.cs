@@ -33,6 +33,7 @@ public class Health : MonoBehaviour
         BlinkObject();
     
         if (currentHealth <= 0) {
+            OnDie.Invoke();
             Destroy(this.gameObject);
         }
     }

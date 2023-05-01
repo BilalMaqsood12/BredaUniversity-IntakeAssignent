@@ -1018,7 +1018,7 @@ MonoBehaviour:
   partolSpeed: 500
   playerDetectorTransform: {fileID: 4164398313780227352}
   playerSpottableDistance: 12
-  stoppingDistance: 12
+  stoppingDistance: 13
   playerMask:
     serializedVersion: 2
     m_Bits: 8

@@ -38,7 +38,7 @@ public class PlayerController : MonoBehaviour
 
 
     //
-    int facingDirection;
+    [HideInInspector] public int facingDirection;
     float _gravity;
 
     //Components
@@ -71,8 +71,9 @@ public class PlayerController : MonoBehaviour
         isGrounded = Physics.Raycast(groundChecker.position, -groundChecker.up, out hit, groundCheckDistance);
         animator.SetBool("OnGround", isGrounded);
          
-        movementDirection = new Vector3(Input.GetAxis("Horizontal"), 0, 0);
+        movementDirection = new Vector3(Input.GetAxisRaw("Horizontal"), 0, 0);
         animator.SetFloat("Movement", movementDirection.x);
+        animator.SetBool("CanFly", canFly);
 
         //Face player towards input direction
         if (movementDirection.x < 0 ) {
@@ -127,7 +128,7 @@ public class PlayerController : MonoBehaviour
         }
 
         //Shoot Projectile
-        if (Input.GetKeyDown(KeyCode.F) && GameManager.instance.stonesCount > 0)
+        if (Input.GetKeyDown(KeyCode.F) && GameManager.instance.stonesCount > 0 && !canFly)
         {
             float upperBodyLayerWeight = 1f;
             animator.SetLayerWeight(upperBodyLayerIndex, upperBodyLayerWeight);
@@ -182,6 +183,8 @@ public class PlayerController : MonoBehaviour
         }else if (facingDirection == 1) {
             newProjectile.GetComponent<Rigidbody>().AddForce(-transform.forward * throwForce, ForceMode.Impulse);
         }
+
+        PlayerPrefs.SetInt("StonesCount", GameManager.instance.stonesCount);
         
     }
 
@@ -193,6 +196,14 @@ public class PlayerController : MonoBehaviour
     private void AddForce(float force, Vector3 direction, ForceMode forceMode)
     {
         rb.AddForce(direction * force * Time.deltaTime, ForceMode.Impulse);
+    }
+
+
+    private void OnCollisionEnter(Collision other) {
+        if (other.gameObject.tag == "Obstacle") {
+            GameManager.instance.RemoveHeart(1);
+            other.collider.enabled = false;
+        }
     }
 
 }

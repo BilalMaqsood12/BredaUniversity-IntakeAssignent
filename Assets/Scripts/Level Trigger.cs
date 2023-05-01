@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class LevelTrigger : MonoBehaviour
 {
-
+    public bool loadNextScene = true;
 
     // Start is called before the first frame update
     void Start()
@@ -20,7 +20,14 @@ public class LevelTrigger : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider other) {
-        GameManager.instance.RemoveCameraTargets();
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        if (other.CompareTag("Player")) {
+            if (loadNextScene) {
+                GameManager.instance.RemoveCameraTargets();
+                PlayerPrefs.DeleteKey("Checkpoint");
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            }else if (!loadNextScene) {
+                GameManager.instance.RemoveHeart(99);
+            }
+        }
     }
 }

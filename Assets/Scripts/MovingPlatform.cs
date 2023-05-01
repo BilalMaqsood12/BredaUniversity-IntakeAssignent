@@ -28,7 +28,7 @@ public class MovingPlatform : MonoBehaviour
         transform.position = Vector3.MoveTowards(transform.position, waypoints[_currentWaypoint].transform.position,
             (moveSpeed * Time.deltaTime));
 
-        if (Vector3.Distance(waypoints[_currentWaypoint].transform.position, transform.position) <= 0)
+        if (Vector3.Distance(waypoints[_currentWaypoint].transform.position, transform.position) <= 0.1f)
         {
             _currentWaypoint++;
         }

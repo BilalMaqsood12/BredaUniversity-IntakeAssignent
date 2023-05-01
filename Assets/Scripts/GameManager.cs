@@ -11,6 +11,10 @@ public class GameManager : MonoBehaviour
 
     public Transform player;
     public CinemachineVirtualCamera followCamera;
+    
+    [Space]
+
+    public Checkpoints[] checkpoints;
 
     [Header ("PLAYER STATS")]
     public int stonesCount;
@@ -18,6 +22,8 @@ public class GameManager : MonoBehaviour
     public int currentHearts;
     public int maxHearts;
 
+
+    int tempStonesCount;
 
     private void Awake() {
         instance = this;
@@ -28,6 +34,18 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         currentHearts = maxHearts;
+        PlayerPrefs.DeleteKey("Checkpoint");
+
+        tempStonesCount = PlayerPrefs.GetInt("StonesCount");
+
+        if (tempStonesCount == 0) {
+            PlayerPrefs.SetInt("StonesCount", stonesCount);
+        }else {
+            stonesCount = PlayerPrefs.GetInt("StonesCount");
+        }
+        
+    
+    
     }
 
     // Update is called once per frame
@@ -44,7 +62,13 @@ public class GameManager : MonoBehaviour
         }
 
         if (currentHearts <= 0) {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            if (PlayerPrefs.GetInt("Checkpoint") == 1) {
+                GameManager.instance.player.position = GameManager.instance.checkpoints[0].startPos.position;
+                AddHeart(maxHearts);
+            }else if (PlayerPrefs.GetInt("Checkpoint") == 0) {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            }
+            
         }
 
     }
@@ -56,6 +80,8 @@ public class GameManager : MonoBehaviour
             currentHearts -= val;
             UIManager.instance.UpdateHearts();
         }
+
+        BlinkObject();
     }
 
     public void AddHeart (int val)
@@ -64,6 +90,7 @@ public class GameManager : MonoBehaviour
         {
             currentHearts += val;
             UIManager.instance.UpdateHearts();
+
         }
     }
 
@@ -79,6 +106,30 @@ public class GameManager : MonoBehaviour
 
     public void CancelMovement () {
         player.gameObject.GetComponent<PlayerController>().enabled = false;
+    }
+
+    private void OnApplicationQuit() {
+        PlayerPrefs.DeleteKey("StonesCount");
+    }
+
+
+    private void BlinkObject()
+    {
+        Invoke("EnableBlink", 0f);
+        Invoke("DisableBlink", 0.06f);
+    }
+
+    private void EnableBlink ()
+    {
+        player.localScale = Vector3.zero;
+    }
+    private void DisableBlink ()
+    {
+        if (player.GetComponent<PlayerController>().facingDirection == 1) {
+            player.localScale = new Vector3(1, 1, -1);
+        }else {
+            player.localScale = new Vector3(1, 1, 1);
+        }
     }
 
 }

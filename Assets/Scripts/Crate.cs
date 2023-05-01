@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Crate : MonoBehaviour
 {
@@ -11,10 +12,10 @@ public class Crate : MonoBehaviour
     [Space]
     public GameObject HeartItem;
     public GameObject[] StonesItem;
-    [Space]
+    
+    [Header ("ENEMY")]
     public GameObject enemy;
-    public bool AvoidWalls;
-    public bool AvoidGrounds;
+    public UnityEvent OnDie;
 
     public enum CrateType
     {
@@ -54,7 +55,7 @@ public class Crate : MonoBehaviour
             }else if (GameManager.instance.player.position.x > transform.position.x) {
                 newEnemy.GetComponent<Enemy>().movingRight = false;
             }
-            
+            newEnemy.GetComponent<Health>().OnDie = OnDie;
         }
 
         Destroy(this.gameObject);
