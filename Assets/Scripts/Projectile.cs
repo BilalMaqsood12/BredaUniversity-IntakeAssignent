@@ -41,6 +41,12 @@ public class Projectile : MonoBehaviour
         
         }
 
+        if (other.gameObject.tag == "Chest")
+        {
+            other.transform.GetComponent<Chest>().OpenChest();
+            Destroy(this.gameObject);
+        }
+
         if (!other.CompareTag("Item")) {
             Destroy(this.gameObject);
         }

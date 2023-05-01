@@ -11,6 +11,7 @@ TagManager:
   - Moving Platform
   - Cage Controller
   - Obstacle
+  - Chest
   layers:
   - Default
   - TransparentFX
