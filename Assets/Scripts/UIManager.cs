@@ -27,7 +27,7 @@ public class UIManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        CreateHeartsGFX();
+        
     }
 
     // Update is called once per frame
@@ -39,6 +39,20 @@ public class UIManager : MonoBehaviour
     public void CreateHeartsGFX ()
     {
         for (int i = 0; i < GameManager.instance.maxHearts; i++)
+        {
+            GameObject newHeart = new GameObject("Heart " + i, typeof(RectTransform));
+            newHeart.transform.parent = HeartsGrid;
+            newHeart.AddComponent<Image>();
+            newHeart.GetComponent<Image>().sprite = HeartImage;
+            newHeart.GetComponent<Image>().color = HeartColor;
+            newHeart.transform.localScale = new Vector3(1, 1, 1);
+            HeartsGFX.Add(newHeart.GetComponent<Image>());
+        }
+    }
+
+    public void UpdateHeartsGFX ()
+    {
+        for (int i = 0; i < GameManager.instance.maxHearts - GameManager.instance.tempCuurrentHearts; i++)
         {
             GameObject newHeart = new GameObject("Heart " + i, typeof(RectTransform));
             newHeart.transform.parent = HeartsGrid;

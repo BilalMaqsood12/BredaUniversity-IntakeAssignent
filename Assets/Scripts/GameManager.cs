@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance {get; set;}
 
+    public int level = 1;
     public Transform player;
     public CinemachineVirtualCamera followCamera;
     
@@ -23,7 +24,7 @@ public class GameManager : MonoBehaviour
     public int maxHearts;
 
 
-    int tempStonesCount;
+    [HideInInspector] public int tempCuurrentHearts;
 
     private void Awake() {
         instance = this;
@@ -36,15 +37,24 @@ public class GameManager : MonoBehaviour
         currentHearts = maxHearts;
         PlayerPrefs.DeleteKey("Checkpoint");
 
-        tempStonesCount = PlayerPrefs.GetInt("StonesCount");
-
-        if (tempStonesCount == 0) {
-            PlayerPrefs.SetInt("StonesCount", stonesCount);
+        if (level == 1) {
+            PlayerPrefs.DeleteKey("Hearts");
+            PlayerPrefs.DeleteKey("StonesCount");
         }else {
+            maxHearts = PlayerPrefs.GetInt("Hearts");
+            currentHearts = PlayerPrefs.GetInt("Hearts");
             stonesCount = PlayerPrefs.GetInt("StonesCount");
         }
-        
-    
+
+        if (stonesCount <= 0) {
+            PlayerPrefs.SetInt("StonesCount", 14);
+            stonesCount = PlayerPrefs.GetInt("StonesCount");
+        }
+
+        tempCuurrentHearts = currentHearts;
+
+        UIManager.instance.CreateHeartsGFX();
+
     
     }
 
@@ -116,7 +126,7 @@ public class GameManager : MonoBehaviour
     private void BlinkObject()
     {
         Invoke("EnableBlink", 0f);
-        Invoke("DisableBlink", 0.06f);
+        Invoke("DisableBlink", 0.1f);
     }
 
     private void EnableBlink ()
@@ -136,7 +146,8 @@ public class GameManager : MonoBehaviour
 
     public void RewardForCompletingFirstLevel ()
     {
-        
+        UIManager.instance.UpdateHeartsGFX();
+        AddHeart(maxHearts - currentHearts);
     }
 
 }
