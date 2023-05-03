@@ -25,6 +25,7 @@ public class Checkpoints : MonoBehaviour
             if (!CheckpointChecked) {
                 GetComponent<Animator>().SetBool("Checkpoint", true);
                 PlayerPrefs.SetInt("Checkpoint", 1);
+                CheckpointChecked = true;
             }
         }
     }

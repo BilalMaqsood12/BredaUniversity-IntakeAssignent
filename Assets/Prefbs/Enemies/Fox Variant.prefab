@@ -93,6 +93,77 @@ Transform:
   m_Father: {fileID: 8338999128371962321}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &188388893153622087
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 8338999128371962321}
+    m_Modifications:
+    - target: {fileID: 7105207536951968587, guid: 156270f62de7e6d47b4dacc28c0fa2fe, type: 3}
+      propertyPath: m_Name
+      value: Enemy Spot Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 7391726028202856982, guid: 156270f62de7e6d47b4dacc28c0fa2fe, type: 3}
+      propertyPath: m_RootOrder
+      value: 26
+      objectReference: {fileID: 0}
+    - target: {fileID: 7391726028202856982, guid: 156270f62de7e6d47b4dacc28c0fa2fe, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7391726028202856982, guid: 156270f62de7e6d47b4dacc28c0fa2fe, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7391726028202856982, guid: 156270f62de7e6d47b4dacc28c0fa2fe, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7391726028202856982, guid: 156270f62de7e6d47b4dacc28c0fa2fe, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 7391726028202856982, guid: 156270f62de7e6d47b4dacc28c0fa2fe, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 7391726028202856982, guid: 156270f62de7e6d47b4dacc28c0fa2fe, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7391726028202856982, guid: 156270f62de7e6d47b4dacc28c0fa2fe, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7391726028202856982, guid: 156270f62de7e6d47b4dacc28c0fa2fe, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 7391726028202856982, guid: 156270f62de7e6d47b4dacc28c0fa2fe, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7391726028202856982, guid: 156270f62de7e6d47b4dacc28c0fa2fe, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 156270f62de7e6d47b4dacc28c0fa2fe, type: 3}
+--- !u!198 &2158751887128228990 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 2263102604751375417, guid: 156270f62de7e6d47b4dacc28c0fa2fe, type: 3}
+  m_PrefabInstance: {fileID: 188388893153622087}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &7208544585327749713 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7391726028202856982, guid: 156270f62de7e6d47b4dacc28c0fa2fe, type: 3}
+  m_PrefabInstance: {fileID: 188388893153622087}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8372379702334735930
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2170,6 +2241,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 7b659ca7a65cc4647bc2c24b094bb79e, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3640152693594843507}
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 7b659ca7a65cc4647bc2c24b094bb79e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7208544585327749713}
     - targetCorrespondingSourceObject: {fileID: -9200322722654200049, guid: 7b659ca7a65cc4647bc2c24b094bb79e, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8702912575180403073}
@@ -2598,10 +2672,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canMove: 1
-  chasingSpeed: 700
+  chasingSpeed: 750
   partolSpeed: 575
   playerDetectorTransform: {fileID: 3640152693594843507}
-  playerSpottableDistance: 12
+  playerSpottableDistance: 15
   stoppingDistance: 10
   playerMask:
     serializedVersion: 2
@@ -2614,6 +2688,7 @@ MonoBehaviour:
   detectionDistance: 0.75
   detectGround: 0
   detectWall: 0
+  playerSpotParticle: {fileID: 2158751887128228990}
   projectilePrefb: {fileID: 5204831664110338382, guid: d0d8eb6371d185d41aab27e6907b27f4, type: 3}
   projectileSpawnTransform: {fileID: 8702912575180403073}
   throwForce: 35

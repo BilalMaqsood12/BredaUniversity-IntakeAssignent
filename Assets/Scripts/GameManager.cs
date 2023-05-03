@@ -23,6 +23,10 @@ public class GameManager : MonoBehaviour
     public int currentHearts;
     public int maxHearts;
 
+    [Header ("CAMERA SHAKES")]
+    public Vector3 hitShake;
+    public Vector3 doubleJumpShake;
+
 
     [HideInInspector] public int tempCuurrentHearts;
 
@@ -89,6 +93,7 @@ public class GameManager : MonoBehaviour
         {
             currentHearts -= val;
             UIManager.instance.UpdateHearts();
+            StartCoroutine(GameManager.instance.CameraShake(hitShake.x, hitShake.y, hitShake.z));
         }
 
         BlinkObject();
@@ -148,6 +153,21 @@ public class GameManager : MonoBehaviour
     {
         UIManager.instance.UpdateHeartsGFX();
         AddHeart(maxHearts - currentHearts);
+    }
+
+
+    public IEnumerator CameraShake(float amplitude, float frequency, float time)
+    {
+        followCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain = amplitude;
+        followCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_FrequencyGain = frequency;
+
+        yield return new WaitForSeconds(time);
+
+        followCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain = 0;
+        followCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_FrequencyGain = 0;
+
+        yield return null; 
+        
     }
 
 }

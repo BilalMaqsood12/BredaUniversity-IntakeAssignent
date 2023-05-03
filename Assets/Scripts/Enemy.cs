@@ -16,7 +16,7 @@ public class Enemy : MonoBehaviour
     public float coolDownTime = 2f;
     public float extraGravity = -80f;
     [Space]
-    [ReadOnly]public bool movingRight = true;
+    public bool movingRight = true;
     [ReadOnly]public bool hasSpottedPlayer;
     [Space]
     public Transform obstacleDetector;
@@ -27,6 +27,10 @@ public class Enemy : MonoBehaviour
     [ReadOnly]public bool detectGround;
     [ReadOnly]public bool detectWall;
     
+    [Header ("PARTICLES")]
+    public ParticleSystem playerSpotParticle;
+    float spotParticleCoolDownTime;
+
 
     [Header ("PROJECTILES AND STUFF")]
     public GameObject projectilePrefb;
@@ -70,8 +74,20 @@ public class Enemy : MonoBehaviour
 
         if (!hasSpottedPlayer) {
             speed = partolSpeed;
-        } else if (hasSpottedPlayer) {
+            animator.speed = 1f;
+
+            spotParticleCoolDownTime -= Time.deltaTime;
+        } 
+        else if (hasSpottedPlayer) 
+        {
             speed = chasingSpeed;
+            animator.speed = 1.2f;
+            
+            if (spotParticleCoolDownTime <= 0) {
+                playerSpotParticle.Play();
+                
+            }
+            spotParticleCoolDownTime = 4f;
         }
 
         if (!startShooting && canMove) {

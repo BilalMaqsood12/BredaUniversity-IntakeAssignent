@@ -47,6 +47,11 @@ public class PlayerController : MonoBehaviour
     Vector3 movementDirection;
 
 
+    //
+    bool camJumpShake;
+    int jumpCount;
+
+
     //Animation related stuff
     int upperBodyLayerIndex;
 
@@ -94,6 +99,13 @@ public class PlayerController : MonoBehaviour
             jumpCounter = 0;
         }
 
+        if (numberOfJumps > 0) {
+            if (!camJumpShake) {
+                StartCoroutine(GameManager.instance.CameraShake(GameManager.instance.doubleJumpShake.x, GameManager.instance.doubleJumpShake.y, GameManager.instance.doubleJumpShake.z));
+                camJumpShake = true;
+            }
+        }
+
         if (rb.velocity.y > 0 && isJumping) {
             jumpCounter += Time.deltaTime;
             if (jumpCounter > jumpTime) isJumping = false;
@@ -118,6 +130,7 @@ public class PlayerController : MonoBehaviour
 
         if (!isGrounded) {
             animator.SetFloat("Jump", rb.velocity.y);
+            camJumpShake = false;
             
         }
 

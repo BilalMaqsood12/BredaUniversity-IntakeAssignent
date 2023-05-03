@@ -17,7 +17,7 @@ public class UIManager : MonoBehaviour
     public RectTransform HeartsGrid;
     public Color HeartColor;
     public Color EmptyHeartColor;
-    [HideInInspector] public List<Image> HeartsGFX;
+    public List<Image> HeartsGFX;
 
 
     private void Awake() {
