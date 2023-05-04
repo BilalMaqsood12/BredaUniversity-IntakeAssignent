@@ -2268,6 +2268,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: d6d1d5ebdb2a99742bcfe13998920f44, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5761293561372719114}
+    - targetCorrespondingSourceObject: {fileID: 8879528566716807029, guid: d6d1d5ebdb2a99742bcfe13998920f44, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4954188880038598959}
     - targetCorrespondingSourceObject: {fileID: 9098243029162800175, guid: d6d1d5ebdb2a99742bcfe13998920f44, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3443222603030177653}
@@ -2512,6 +2515,7 @@ MonoBehaviour:
   projectilePrefb: {fileID: 5204831664110338382, guid: 622489ad2b3533949a458ab2eb8793fd, type: 3}
   projectileSpawnTransform: {fileID: 3443222603030177653}
   throwForce: 35
+  DoubleJumpParticle: {fileID: 8236720524136528948}
   facingDirection: 0
 --- !u!54 &6285376810134733753
 Rigidbody:
@@ -2738,6 +2742,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -349395515681763999, guid: d6d1d5ebdb2a99742bcfe13998920f44, type: 3}
   m_PrefabInstance: {fileID: 3894374706886468317}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &5562496421605496232 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8879528566716807029, guid: d6d1d5ebdb2a99742bcfe13998920f44, type: 3}
+  m_PrefabInstance: {fileID: 3894374706886468317}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5609054158424634176 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8925224204818190749, guid: d6d1d5ebdb2a99742bcfe13998920f44, type: 3}
@@ -2882,4 +2891,75 @@ Transform:
 Transform:
   m_CorrespondingSourceObject: {fileID: -3779974922221334409, guid: d6d1d5ebdb2a99742bcfe13998920f44, type: 3}
   m_PrefabInstance: {fileID: 3894374706886468317}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &7945297777113769831
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 5562496421605496232}
+    m_Modifications:
+    - target: {fileID: 3063449070177959496, guid: 532842d2484dd314d959157616246e16, type: 3}
+      propertyPath: m_RootOrder
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3063449070177959496, guid: 532842d2484dd314d959157616246e16, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3063449070177959496, guid: 532842d2484dd314d959157616246e16, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3063449070177959496, guid: 532842d2484dd314d959157616246e16, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.00061
+      objectReference: {fileID: 0}
+    - target: {fileID: 3063449070177959496, guid: 532842d2484dd314d959157616246e16, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3063449070177959496, guid: 532842d2484dd314d959157616246e16, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.0000016093248
+      objectReference: {fileID: 0}
+    - target: {fileID: 3063449070177959496, guid: 532842d2484dd314d959157616246e16, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3063449070177959496, guid: 532842d2484dd314d959157616246e16, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3063449070177959496, guid: 532842d2484dd314d959157616246e16, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 3063449070177959496, guid: 532842d2484dd314d959157616246e16, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3063449070177959496, guid: 532842d2484dd314d959157616246e16, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5340845736828654285, guid: 532842d2484dd314d959157616246e16, type: 3}
+      propertyPath: m_Name
+      value: Double Jump Particle
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 532842d2484dd314d959157616246e16, type: 3}
+--- !u!4 &4954188880038598959 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3063449070177959496, guid: 532842d2484dd314d959157616246e16, type: 3}
+  m_PrefabInstance: {fileID: 7945297777113769831}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &8236720524136528948 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 2021530838524664659, guid: 532842d2484dd314d959157616246e16, type: 3}
+  m_PrefabInstance: {fileID: 7945297777113769831}
   m_PrefabAsset: {fileID: 0}

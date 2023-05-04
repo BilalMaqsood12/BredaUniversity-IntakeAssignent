@@ -11,6 +11,7 @@ public class Health : MonoBehaviour
     public Material blinkMaterial;
     public Material originalMaterial;
     [Space]
+    public GameObject KillParticles;
     public UnityEvent OnDie;
 
     // Start is called before the first frame update
@@ -33,6 +34,7 @@ public class Health : MonoBehaviour
         BlinkObject();
     
         if (currentHealth <= 0) {
+            spawnKillParticle();
             OnDie.Invoke();
             Destroy(this.gameObject);
         }
@@ -51,5 +53,12 @@ public class Health : MonoBehaviour
     private void DisableBlink ()
     {
         GetComponentInChildren<SkinnedMeshRenderer>().material = originalMaterial;
+    }
+
+    public void spawnKillParticle ()
+    {
+        Vector3 particlePos = new Vector3 (transform.position.x, transform.position.y + 1.15f, transform.position.z);
+        var killparticle = Instantiate(KillParticles, particlePos, Quaternion.identity);
+        Destroy(killparticle, 3f);
     }
 }

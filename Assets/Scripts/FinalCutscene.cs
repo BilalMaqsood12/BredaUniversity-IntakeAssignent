@@ -40,7 +40,7 @@ public class FinalCutscene : MonoBehaviour
        
         mrsBunny.position = mrsBunnyPos.position;
         mrBunny.position = mrBunnyPos.position;
-        mrBunny.GetComponent<Animator>().Play("Movement");
+        GameManager.instance.CancelMovement();
         Heart.gameObject.SetActive(true);
 
         yield return new WaitForSecondsRealtime(7f);

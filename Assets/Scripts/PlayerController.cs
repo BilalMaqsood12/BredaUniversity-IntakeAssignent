@@ -25,6 +25,7 @@ public class PlayerController : MonoBehaviour
     float jumpCounter;
     Vector3 vecGravity;
     int numberOfJumps;
+    int currentJump;
 
     [Header ("GROUND CHECK")]
     public Transform groundChecker;
@@ -36,6 +37,9 @@ public class PlayerController : MonoBehaviour
     public Transform projectileSpawnTransform;
     public float throwForce = 1000f;
 
+    [Header ("PARTICLES")]
+    public ParticleSystem DoubleJumpParticle;
+
 
     //
     [HideInInspector] public int facingDirection;
@@ -45,11 +49,6 @@ public class PlayerController : MonoBehaviour
     Rigidbody rb;
     Animator animator;
     Vector3 movementDirection;
-
-
-    //
-    bool camJumpShake;
-    int jumpCount;
 
 
     //Animation related stuff
@@ -97,13 +96,16 @@ public class PlayerController : MonoBehaviour
             isJumping = true;
             numberOfJumps += 1;
             jumpCounter = 0;
+            currentJump += 1;
         }
 
-        if (numberOfJumps > 0) {
-            if (!camJumpShake) {
-                StartCoroutine(GameManager.instance.CameraShake(GameManager.instance.doubleJumpShake.x, GameManager.instance.doubleJumpShake.y, GameManager.instance.doubleJumpShake.z));
-                camJumpShake = true;
+        if (isJumping) {
+            if (currentJump > 1) {
+                DoubleJumpParticle.Play();
+                currentJump = 0;
             }
+        }else if (!isJumping && isGrounded) {
+            currentJump = 0;
         }
 
         if (rb.velocity.y > 0 && isJumping) {
@@ -129,9 +131,7 @@ public class PlayerController : MonoBehaviour
         }
 
         if (!isGrounded) {
-            animator.SetFloat("Jump", rb.velocity.y);
-            camJumpShake = false;
-            
+            animator.SetFloat("Jump", rb.velocity.y);            
         }
 
 

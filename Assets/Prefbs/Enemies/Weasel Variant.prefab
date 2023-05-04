@@ -2168,6 +2168,7 @@ MonoBehaviour:
   blinkTime: 0.1
   blinkMaterial: {fileID: 2100000, guid: 0715aefc489d81246944070b40045929, type: 2}
   originalMaterial: {fileID: 2100000, guid: c03de44ab6a47a140b0d3703ac8ab273, type: 2}
+  KillParticles: {fileID: 1776414184818648523, guid: a66a4bd63a45ae448bf75a91eaa33764, type: 3}
   OnDie:
     m_PersistentCalls:
       m_Calls: []

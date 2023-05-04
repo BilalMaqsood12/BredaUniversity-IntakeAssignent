@@ -25,8 +25,11 @@ public class LevelTrigger : MonoBehaviour
                 GameManager.instance.RemoveCameraTargets();
                 PlayerPrefs.DeleteKey("Checkpoint");
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-            }else if (!loadNextScene) {
-                GameManager.instance.RemoveHeart(99);
+            }
+            else 
+            {
+                GameManager.instance.currentHearts = 0;
+                GameManager.instance.RemoveHeart(0);
             }
         }
     }

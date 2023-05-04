@@ -1153,7 +1153,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0, g: 0.66519666, b: 1, a: 0.59607846}
+      maxColor: {r: 1, g: 0.8302624, b: 0, a: 0.59607846}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -12659,7 +12659,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0, g: 0.6969085, b: 1, a: 0.2627451}
+      maxColor: {r: 1, g: 0.8798679, b: 0, a: 0.2627451}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -13736,7 +13736,7 @@ ParticleSystem:
         m_RotationOrder: 4
     separateAxes: 0
   ColorModule:
-    enabled: 1
+    enabled: 0
     gradient:
       serializedVersion: 2
       minMaxState: 1
@@ -24528,16 +24528,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 5755459692744109567}
     - target: {fileID: 6955952997605647381, guid: b30074f64da73714f9001f76a0ced0fe, type: 3}
-      propertyPath: doubleJumpShake.y
+      propertyPath: doubleJumpShake.x
       value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 6955952997605647381, guid: b30074f64da73714f9001f76a0ced0fe, type: 3}
-      propertyPath: doubleJumpShake.z
-      value: 0.15
+      propertyPath: doubleJumpShake.y
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6955952997605647381, guid: b30074f64da73714f9001f76a0ced0fe, type: 3}
-      propertyPath: checkpoints.Array.size
-      value: 1
+      propertyPath: doubleJumpShake.z
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 6955952997605647381, guid: b30074f64da73714f9001f76a0ced0fe, type: 3}
       propertyPath: checkpoints.Array.data[0]
@@ -24625,6 +24625,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2620286695924692394, guid: f75393e8f4797b14ba93e1280ba1831f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3567167928703288630, guid: f75393e8f4797b14ba93e1280ba1831f, type: 3}
       propertyPath: m_RootOrder
       value: 4

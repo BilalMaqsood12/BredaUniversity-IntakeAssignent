@@ -25,7 +25,6 @@ public class GameManager : MonoBehaviour
 
     [Header ("CAMERA SHAKES")]
     public Vector3 hitShake;
-    public Vector3 doubleJumpShake;
 
 
     [HideInInspector] public int tempCuurrentHearts;
@@ -65,35 +64,29 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.G))
-        {
-            AddHeart(1);
-        }
+        
 
-        if (Input.GetKeyDown(KeyCode.H))
-        {
-            RemoveHeart(1);
-        }
+    }
 
-        if (currentHearts <= 0) {
-            if (PlayerPrefs.GetInt("Checkpoint") == 1) {
-                GameManager.instance.player.position = GameManager.instance.checkpoints[0].startPos.position;
-                AddHeart(maxHearts);
-            }else if (PlayerPrefs.GetInt("Checkpoint") == 0) {
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-            }
-            
+    public void RestoreLives ()
+    {
+        if (PlayerPrefs.GetInt("Checkpoint") == 1) {
+            GameManager.instance.player.position = GameManager.instance.checkpoints[0].startPos.position;
+            AddHeart(maxHearts);
+        }else if (PlayerPrefs.GetInt("Checkpoint") == 0) {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
-
     }
 
     public void RemoveHeart (int val)
     {
+        currentHearts -= val;
         if (currentHearts > 0) 
         {
-            currentHearts -= val;
             UIManager.instance.UpdateHearts();
             StartCoroutine(GameManager.instance.CameraShake(hitShake.x, hitShake.y, hitShake.z));
+        }else {
+            RestoreLives();
         }
 
         BlinkObject();
@@ -119,8 +112,9 @@ public class GameManager : MonoBehaviour
         followCamera.m_LookAt = null;
     }
 
-    public void CancelMovement () {
+    public void CancelMovement () {    
         player.gameObject.GetComponent<PlayerController>().enabled = false;
+        player.GetComponent<Animator>().SetFloat("Movement", 0);
     }
 
     private void OnApplicationQuit() {
