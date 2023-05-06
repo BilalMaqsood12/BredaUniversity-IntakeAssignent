@@ -2504,7 +2504,7 @@ MonoBehaviour:
   canFly: 0
   SqueezableObjects:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 576
   SqueezeForce: 1300
   jumpForce: 32
   jumpTime: 0.6

@@ -23,7 +23,7 @@ public class Checkpoints : MonoBehaviour
     private void OnTriggerEnter(Collider other) {
         if (other.CompareTag("Player")) {
             if (!CheckpointChecked) {
-                GetComponent<Animator>().SetBool("Checkpoint", true);
+                GetComponent<Animator>().Play("Checkpoint_Checked");
                 PlayerPrefs.SetInt("Checkpoint", 1);
                 CheckpointChecked = true;
             }

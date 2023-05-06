@@ -181,6 +181,9 @@ public class PlayerController : MonoBehaviour
             if (SqueezableObjectsHit.collider.gameObject.GetComponent<Crate>() != null) {
                 SqueezableObjectsHit.collider.gameObject.GetComponent<Crate>().OpenCrate();
             }
+            else if (SqueezableObjectsHit.collider.gameObject.GetComponent<Health>() != null) {
+                SqueezableObjectsHit.collider.gameObject.GetComponent<Health>().TakeDamage(1);
+            }
         }
 
         

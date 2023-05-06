@@ -36,6 +36,8 @@ public class FinalCutscene : MonoBehaviour
     {
         BlackScreen.Play("BlackScreen");
 
+        mrBunny.GetComponent<PlayerController>().enabled = false;
+
         yield return new WaitForSecondsRealtime(0.5f);
        
         mrsBunny.position = mrsBunnyPos.position;

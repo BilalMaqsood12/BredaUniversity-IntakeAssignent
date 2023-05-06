@@ -21,6 +21,7 @@ public class Enemy : MonoBehaviour
     [Space]
     public Transform obstacleDetector;
     public float detectionDistance;
+    public LayerMask avoidableObstacles;
    
     [Space]
 
@@ -105,21 +106,21 @@ public class Enemy : MonoBehaviour
         //Ground Detection
         Vector3[] directions = new Vector3[]{-Vector3.up, Vector3.left, Vector3.right};
     
-        detectGround = Physics.Raycast(obstacleDetector.position, directions[0], out hit[0], detectionDistance);
+        detectGround = Physics.Raycast(obstacleDetector.position, directions[0], out hit[0], detectionDistance, avoidableObstacles);
         if (hit[0].collider == null && _directionCoolDownTime <= 0f) 
         {
             ChangeDirection();
         }
 
         //Wall Detection in Left Direction
-        detectWall = Physics.Raycast(obstacleDetector.position, directions[1], out hit[1], detectionDistance);
+        detectWall = Physics.Raycast(obstacleDetector.position, directions[1], out hit[1], detectionDistance, avoidableObstacles);
         if (hit[1].collider != null && _directionCoolDownTime <= 0f) 
         {
             ChangeDirection();
         }
 
         //Wall Detection in Right Direction
-        detectWall = Physics.Raycast(obstacleDetector.position, directions[2], out hit[2], detectionDistance);
+        detectWall = Physics.Raycast(obstacleDetector.position, directions[2], out hit[2], detectionDistance, avoidableObstacles);
         if (hit[2].collider != null && _directionCoolDownTime <= 0f) 
         {
             ChangeDirection();

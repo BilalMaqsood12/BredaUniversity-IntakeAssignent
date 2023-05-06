@@ -32,5 +32,9 @@ public class LevelTrigger : MonoBehaviour
                 GameManager.instance.RemoveHeart(0);
             }
         }
+
+        if (other.CompareTag("Enemy")) {
+            other.GetComponent<Health>().TakeDamage(99);
+        }
     }
 }
