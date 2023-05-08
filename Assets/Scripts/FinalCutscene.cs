@@ -40,6 +40,7 @@ public class FinalCutscene : MonoBehaviour
 
         yield return new WaitForSecondsRealtime(0.5f);
        
+        mrBunny.localScale = new Vector3(1, 1, -1);
         mrsBunny.position = mrsBunnyPos.position;
         mrBunny.position = mrBunnyPos.position;
         GameManager.instance.CancelMovement();
